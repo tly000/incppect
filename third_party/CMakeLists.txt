@@ -5,8 +5,8 @@ else ()
     unset(OPENSSL_INCLUDE_DIR)
 endif ()
 
-if (APPLE)
-    add_library(uWS SHARED
+if (APPLE OR WIN32)
+    add_library(uWS
         uWebSockets/uSockets/src/context.c
         uWebSockets/uSockets/src/loop.c
         uWebSockets/uSockets/src/socket.c
@@ -23,6 +23,7 @@ if (APPLE)
     target_include_directories(uWS INTERFACE
         uWebSockets/uSockets/src
         uWebSockets/src
+        ${ZLIB_INCLUDE_DIR}
         )
 
     target_link_libraries(uWS PRIVATE
@@ -36,10 +37,8 @@ if (APPLE)
         )
 
     target_compile_definitions(uWS PRIVATE LIBUS_USE_LIBUV=1)
-elseif (WIN32)
-    message(FATAL_ERROR "Windows build not yet supported")
 else ()
-    add_library(uWS SHARED
+    add_library(uWS
         uWebSockets/uSockets/src/context.c
         uWebSockets/uSockets/src/loop.c
         uWebSockets/uSockets/src/socket.c

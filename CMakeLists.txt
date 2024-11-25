@@ -18,7 +18,7 @@ option(INCPPECT_NO_SSL  "Disable SSL support" OFF)
 find_package(Threads REQUIRED)
 find_package(ZLIB REQUIRED)
 
-if (APPLE)
+if (APPLE OR WIN32)
     find_package(LibUV REQUIRED)
 endif ()
 
